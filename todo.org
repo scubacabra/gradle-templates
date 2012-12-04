@@ -1,0 +1,6 @@
+
+* TODO offer to rename build.gradle to your-project-name.gradle if you elect to
+
+* TODO get it working with the daemon turned on
+
+* TODO add support for sub projects

@@ -1,0 +1,6 @@
+
+* error cannot readLine() when running with gradle daemon turned on
+
+* Certain jvm args set (in this use case in gradle.properties) but should be any of these properties causes readLine() error same as above
+
+* cygwin can't run create*Project for some reason
