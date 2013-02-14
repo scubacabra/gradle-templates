@@ -1,21 +1,15 @@
-//import templates.TemplatesPlugin
-
 apply plugin: 'groovy'
-apply plugin: 'idea'
-apply plugin: 'maven'
 
-version = '1.2'
+version = '1.5'
 group = 'gradle-templates'
 
 repositories { mavenCentral() }
 
-configurations { deployerJars }
-
 dependencies {
 	compile gradleApi()
 	groovy localGroovy()
-	// used to upload artifacts to artifactory.
-	deployerJars "org.apache.maven.wagon:wagon-http:1.0-beta-2"
+	testCompile "org.spockframework:spock-core:0.6-groovy-1.8" 
+	testCompile 'cglib:cglib-nodep:2.2.2'
 }
 
 task('unversionedJar', type: Jar, dependsOn: 'jar') {
@@ -60,33 +54,10 @@ task('groovydocJar', type: Jar, dependsOn: 'groovydoc') {
 	classifier = 'groovydoc'
 	from groovydoc.destinationDir
 }
+
 // Set up gradle to upload source and javadoc jars.
 artifacts {
 	archives sourcesJar
 	archives javadocJar
 	archives groovydocJar
-}
-
-// Tell gradle to build sources and javadoc jars when uploading to repository.
-uploadArchives.dependsOn sourcesJar
-uploadArchives.dependsOn javadocJar
-uploadArchives.dependsOn groovydocJar
-if (project.hasProperty('mavenRepoUrl')) {
-	uploadArchives {
-		repositories.mavenDeployer {
-			configuration = configurations.deployerJars
-			repository url: project.getProperty('mavenRepoUrl')
-		}
-	}
-}
-
-task('prompts') << {
-	println TemplatesPlugin.prompt('What is your favorite color?')
-	println TemplatesPlugin.prompt('What is your favorite color?', 'Green')
-	def options = ['Red', 'Green', 'Blue']
-	println options[TemplatesPlugin.promptOptions('R, G, or B?', options)]
-	println options[TemplatesPlugin.promptOptions('R, G, or B?', 3, options)]
-	println TemplatesPlugin.promptYesOrNo('Did this work for you?')
-	println TemplatesPlugin.promptYesOrNo('Did this work for you?', true)
-	println TemplatesPlugin.promptYesOrNo('Did this work for you?', false)
 }
