@@ -55,6 +55,7 @@ class TemplateBuilder {
   }
 
   private void makeFile(String fileName, Map arguments = [:]) { 
+    log.debug("trying to make file {} with arguments to Templates {}", fileName, arguments)
     def file = new File(parentDir, fileName)
     file.exists() ?: file.parentFile.mkdirs() && file.createNewFile()
     def fileText = TemplatesUtil.renderTemplate(arguments.template, arguments)

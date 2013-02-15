@@ -9,8 +9,8 @@ class TemplateBuilderSpec extends Specification {
 
   def "simple builder" () {
   when: "simple test"
-    template.fromDirectory("test-project") { 
-      source "src/main/java"
+    template.fromDirectory("test-project") {
+      source 'src/main/java'
       test "src/test/java"
       'build.gradle' template: 'java/build.gradle.tmpl', projectGroup: "yomamam"
     }
