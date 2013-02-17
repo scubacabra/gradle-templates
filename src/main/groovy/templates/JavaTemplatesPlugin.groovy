@@ -1,6 +1,7 @@
 package templates
 
 import templates.tasks.CreateJavaProject
+import templates.tasks.CreateJavaClass
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -19,7 +20,7 @@ class JavaTemplatesPlugin implements Plugin<Project> {
     // configureInitJavaProject(project)
     configureCreateJavaProject(project)
     // configureCreateJavaSubProject(project)
-    // configureCreateJavaClass(project)
+    configureCreateJavaClass(project)
   }
 
   def configureInitJavaProject(project) { 
@@ -49,28 +50,8 @@ class JavaTemplatesPlugin implements Plugin<Project> {
     Task createJavaClass = project.tasks.add(CREATE_JAVA_CLASS_TASK_NAME, CreateJavaClass)
     createJavaClass.group = TemplatesPlugin.GROUP
     createJavaClass.description = 'Creates a new Java class in the current project.'
-    def mainSrcDir = null
-    try {
-      // get main java dir, and check to see if Java plugin is installed.
-      mainSrcDir = findMainJavaDir(project)
-    } catch (Exception e) {
-      throw new IllegalStateException('It seems that the Java plugin is not installed, I cannot determine the main java source directory.', e)
-    }
-
-    def fullClassName = props['newClassName'] ?: TemplatesPlugin.prompt('Class name (com.example.MyClass)')
-    if (fullClassName) {
-      def classParts = JavaTemplatesPlugin.getClassParts(fullClassName)
-      ProjectTemplate.fromUserDir {
-	"${mainSrcDir}" {
-	  "${classParts.classPackagePath}" {
-	    "${classParts.className}.java" template: '/templates/java/java-class.tmpl',
-	  classPackage: classParts.classPackage,
-	  className: classParts.className
-	  }
-	}
-      }
-    } else {
-      println 'No class name provided.'
-    }
+    createJavaClass.conventionMapping.projectDirectory = { project.projectDir }
+    createJavaClass.conventionMapping.currentDirectory = { "." }
+    createJavaClass.conventionMapping.javaSourceDir = { project.templates.javaSrcDir }
   }
 }
