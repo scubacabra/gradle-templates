@@ -1,6 +1,7 @@
 package templates
 
 import templates.tasks.CreateGroovyProject
+import templates.tasks.CreateGroovyClass
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -19,7 +20,7 @@ class GroovyTemplatesPlugin implements Plugin<Project> {
     // configureInitGroovyProject(project)
     configureCreateGroovyProject(project)
     // configureCreateGroovySubProject(project)
-    // configureCreateGroovyClass(project)
+    configureCreateGroovyClass(project)
   }
 
   def configureCreateGroovyProject(project) { 
@@ -44,32 +45,11 @@ class GroovyTemplatesPlugin implements Plugin<Project> {
   }
 
   def configureCreateGroovyClass(project) { 
-    project.task('createGroovyClass', group: TemplatesPlugin.group, description: 'Creates a new Groovy class in the current project.') << {
-
-      def mainSrcDir = null
-      try {
-	// get main groovy dir, and check to see if Groovy plugin is installed.
-	mainSrcDir = findMainGroovyDir(project)
-      } catch (Exception e) {
-	throw new IllegalStateException('It seems that the Groovy plugin is not installed, I cannot determine the main groovy source directory.', e)
-      }
-
-      def fullClassName = props['newClassName'] ?: TemplatesPlugin.prompt('Class name (com.example.MyClass)')
-
-      if (fullClassName) {
-	def classParts = JavaTemplatesPlugin.getClassParts(fullClassName)
-	ProjectTemplate.fromUserDir {
-	  "${mainSrcDir}" {
-	    "${classParts.classPackagePath}" {
-	      "${classParts.className}.groovy" template: '/templates/groovy/groovy-class.tmpl',
-	    className: classParts.className,
-	    classPackage: classParts.classPackage
-	    }
-	  }
-	}
-      } else {
-	println 'No class name provided.'
-      }
-    }
+    Task createGroovyClass = project.tasks.add(CREATE_GROOVY_CLASS_TASK_NAME, CreateGroovyClass)
+    createGroovyClass.group = TemplatesPlugin.GROUP
+    createGroovyClass.description = 'Creates a new Groovy class in the current project.'
+    createGroovyClass.conventionMapping.projectDirectory = { project.projectDir }
+    createGroovyClass.conventionMapping.currentDirectory = { "." }
+    createGroovyClass.conventionMapping.groovySourceDir = { project.templates.groovySrcDir }
   }
 }
