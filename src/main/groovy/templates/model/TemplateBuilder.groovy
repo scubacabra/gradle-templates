@@ -26,6 +26,7 @@ class TemplateBuilder {
   }
 
   private void source(String sourcePath, Closure sourceDirectory = {}) { 
+    log.debug("create source Path {}", sourcePath)
     makeDirectory(sourcePath, sourceDirectory)
   }
 
@@ -46,6 +47,7 @@ class TemplateBuilder {
       makeDirectory(name, {})
     } else { 
       if(arguments) { 
+	log.debug("adding file {}, with arguments {}", name, arguments[0])
 	makeFile(name, arguments[0])
       }
       else { 
