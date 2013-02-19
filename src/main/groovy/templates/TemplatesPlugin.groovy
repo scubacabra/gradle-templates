@@ -20,7 +20,7 @@ class TemplatesPlugin implements Plugin<Project> {
     project.apply(plugin: GradlePluginTemplatesPlugin)
     project.apply(plugin: JavaTemplatesPlugin)
     // project.apply(plugin: ScalaTemplatesPlugin)
-    // project.apply(plugin: WebappTemplatesPlugin)
+    project.apply(plugin: WebappTemplatesPlugin)
     
     configureTemplatesExtension(project)
     // configureExportTemplates(project)
