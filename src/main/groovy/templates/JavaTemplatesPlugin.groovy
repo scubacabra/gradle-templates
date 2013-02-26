@@ -1,6 +1,7 @@
 package templates
 
 import templates.tasks.CreateJavaProject
+import templates.tasks.CreateJavaSubProject
 import templates.tasks.CreateJavaClass
 
 import org.gradle.api.Plugin
@@ -19,7 +20,7 @@ class JavaTemplatesPlugin implements Plugin<Project> {
   void apply(Project project) {
     // configureInitJavaProject(project)
     configureCreateJavaProject(project)
-    // configureCreateJavaSubProject(project)
+    configureCreateJavaSubProject(project)
     configureCreateJavaClass(project)
   }
 
@@ -44,6 +45,7 @@ class JavaTemplatesPlugin implements Plugin<Project> {
     Task createJavaSubProject =  project.tasks.add(CREATE_JAVA_SUBPROJECT_TASK_NAME, CreateJavaSubProject)
     createJavaSubProject.group = TemplatesPlugin.GROUP
     createJavaSubProject.description = 'Creates a new Gradle Java project in a new directory named after your project.'
+    createJavaSubProject.conventionMapping.startingDir = { project.rootDir }
   }
 
   def configureCreateJavaClass(project) { 
