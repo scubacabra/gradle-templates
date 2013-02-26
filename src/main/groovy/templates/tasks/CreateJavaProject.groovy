@@ -21,8 +21,8 @@ class CreateJavaProject extends CreateTemplateProject {
       source 'src/main/java'
       test 'src/test/java'
       'build.gradle' template: 'java/build.gradle.tmpl', projectGroup: projectGroup
-      // 'gradle.properties' content: "version=$projectVersion", append: true
-      // 'License.txt' '// Your License Goes Here'
+      'gradle.properties' content: "version=$projectVersion", append: true
+      'License.txt' '// Your License Goes Here'
     }
   }
 

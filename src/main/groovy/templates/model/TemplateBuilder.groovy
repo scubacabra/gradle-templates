@@ -56,15 +56,69 @@ class TemplateBuilder {
     }
   }
 
-  private void makeFile(String fileName, Map arguments = [:]) { 
-    log.debug("trying to make file {} with arguments to Templates {}", fileName, arguments)
+  private void makeFile(String fileName, args) {
+    log.debug("opening file object with name {}", fileName)
     def file = new File(parentDir, fileName)
     file.exists() ?: file.parentFile.mkdirs() && file.createNewFile()
-    def fileText = TemplatesUtil.renderTemplate(arguments.template, arguments)
-    file.text = fileText
+    def text
+    if(args instanceof Map) {
+      if (args.template) {
+	text = makeTemplate(args.template, args)
+      } else if (args.content) {
+	text = makeTemplate(args.content)
+      }
+    } else {
+      text = makeTemplate(args)
+    }
+
+    if(args instanceof Map) { 
+      if(args.append) { 
+	log.debug("append {} to {}", text, file)
+	appendTextToFile(file, text)
+      } else if (args.prepend) {
+	log.debug("prepend {} to {}", text, file)
+	prependTextToFile(file, text)
+      } else {
+	log.debug("add content {} to {}", text, file)
+	addTextToFile(file, text)      
+      }
+    } else {
+      log.debug("add {} to {}", text, file)
+      addTextToFile(file, text)      
+    }
   }
 
-  private void makeDirectory(String directory, Closure closure) { 
+  private void addTextToFile(File file, String text) {
+    file.text = text
+  }
+
+  private void prependTextToFile(File file, String text) { 
+    def oldText = file.exists() ? file.text : ''
+    file.withPrintWriter { pw -> 
+      pw.print text
+      pw.print oldText
+    }
+  }
+
+  private void appendTextToFile(File file, String text) { 
+    def oldText = file.exists() ? file.text : ''
+    file.withPrintWriter { pw -> 
+      pw.print oldText
+      pw.print text
+    }
+  }
+
+  private String makeTemplate(String templateURL, Map arguments) {
+    log.debug("trying to make templates with template URL {} with arguments {}", templateURL, arguments)
+    return TemplatesUtil.renderTemplate(templateURL, arguments)
+  }
+
+  private String makeTemplate(String content) {
+    log.debug("trying to render content {}", content)
+    return TemplatesUtil.renderString(content)
+  }
+
+  private void makeDirectory(String directory, Closure closure) {
     File oldParent = parentDir
     def dir = new File(parentDir, directory)
     log.debug("dir is {}", dir)

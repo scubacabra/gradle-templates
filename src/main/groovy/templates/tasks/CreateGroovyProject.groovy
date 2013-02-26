@@ -21,8 +21,8 @@ class CreateGroovyProject extends CreateTemplateProject {
       source 'src/main/groovy'
       test 'src/test/groovy'
       'build.gradle' template: 'groovy/build.gradle.tmpl', projectGroup: projectGroup
-      // 'gradle.properties' content: "version=$projectVersion", append: true
-      // 'License.txt' '// Your License Goes Here'
+      'gradle.properties' content: "version=$projectVersion", append: true
+      'License.txt' '// Your License Goes Here'
     }
   }
 

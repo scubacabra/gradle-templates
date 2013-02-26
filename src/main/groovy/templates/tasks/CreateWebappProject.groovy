@@ -17,7 +17,7 @@ class CreateWebappProject extends CreateJavaProject {
     def template = createTemplateProject(additionalUserPrompts)
     template.fromDirectory(projectName) { 
       'build.gradle' template: 'webapp/build.gradle.tmpl', useJetty: useJetty, projectGroup: projectGroup
-      // 'gradle.properties' content: "version=${projectVersion}", append: true
+      'gradle.properties' content: "version=${projectVersion}", append: true
     }
   }
 

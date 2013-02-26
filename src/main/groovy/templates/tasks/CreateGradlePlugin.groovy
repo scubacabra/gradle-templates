@@ -27,15 +27,14 @@ class CreateGradlePlugin extends CreateGroovyProject {
     }
     template.fromDirectory(projectName) { 
       source ('src/main/resources/META-INF/gradle-plugins') {
-	// "${pluginApplyLabel}.properties" "implementation-class=${pluginClassName}"
+	"${pluginApplyLabel}.properties" "implementation-class=${pluginClassName}"
       }
       source ("src/main/groovy/${classParts.classPackagePath}") {
 	"${classParts.className}.groovy" template: 'plugin/plugin-class.tmpl', className: classParts.className, classPackage: classParts.classPackage
 	"${classParts.className}Convention.groovy" template: 'plugin/convention-class.tmpl', className: classParts.className, classPackage: classParts.classPackage
       }
       'build.gradle' template: 'plugin/build.gradle.tmpl', projectGroup: projectGroup
-      // 'build.gradle' template: '/templates/plugin/installation-tasks.tmpl', append: true
-      // 'gradle.properties' content: "version=${projectVersion}", append: true
+      'build.gradle' template: 'plugin/installation-tasks.tmpl', append: true
     }
   }
   
