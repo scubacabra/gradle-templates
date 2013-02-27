@@ -7,20 +7,20 @@ import templates.util.ConsolePromptUtil
 import org.gradle.api.logging.Logging
 import org.gradle.api.logging.Logger
 
-class CreateJavaSubProject extends CreateTemplateProject {
+class CreateGroovySubProject extends CreateTemplateProject {
 
-  static final log = Logging.getLogger(CreateJavaSubProject.class)
+  static final log = Logging.getLogger(CreateGroovySubProject.class)
 
   String projectVersion
   String projectGroup
   
   @TaskAction
-  createJavaSubProject() { 
+  createGroovySubProject() { 
     def template = createTemplateProject(additionalUserPrompts)
     template.fromDirectory(projectName) { 
-      source 'src/main/java'
-      test 'src/test/java'
-      "${projectName}.gradle" template: 'java/sub/build.gradle.tmpl', projectGroup: projectGroup, projectVersion: projectVersion
+      source 'src/main/groovy'
+      test 'src/test/groovy'
+      "${projectName}.gradle" template: 'groovy/sub/build.gradle.tmpl', projectGroup: projectGroup, projectVersion: projectVersion
     }
     template.fromDirectory("./") { //same directory as the root Project
       'settings.gradle' prepend: true, content: "include '${projectName}'\n"

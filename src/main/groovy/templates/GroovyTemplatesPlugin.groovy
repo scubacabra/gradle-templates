@@ -13,13 +13,11 @@ import org.gradle.api.Task
  */
 class GroovyTemplatesPlugin implements Plugin<Project> {
   static final String CREATE_GROOVY_PROJECT_TASK_NAME = "createGroovyProject"
-  static final String CREATE_GROOVY_SUBPROJECT_TASK_NAME = "createGroovySubProject"
   static final String CREATE_GROOVY_CLASS_TASK_NAME = "createGroovyClass"
 
   void apply(Project project) {
     // configureInitGroovyProject(project)
     configureCreateGroovyProject(project)
-    // configureCreateGroovySubProject(project)
     configureCreateGroovyClass(project)
   }
 
@@ -28,10 +26,6 @@ class GroovyTemplatesPlugin implements Plugin<Project> {
     createGroovyProject.group = TemplatesPlugin.GROUP
     createGroovyProject.description = 'Creates a new Gradle Groovy project in a new directory named after your project.'
     createGroovyProject.conventionMapping.startingDir = { project.rootDir }
-  }
-
-  def configureCreateGroovySubProject(project) { 
-
   }
   
   def configureInitGroovyProject(project) { 

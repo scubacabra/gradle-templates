@@ -1,6 +1,12 @@
 
-* TODO offer to rename build.gradle to your-project-name.gradle if you elect to
 
 * TODO get it working with the daemon turned on
 
-* TODO add support for sub projects
+* DONE Add multi build project creation task
+  CLOSED: [2013-02-17 Sun 15:40]
+
+* DONE add support for sub projects
+  CLOSED: [2013-02-26 Tue 21:36]
+
+** DONE offer to rename build.gradle to your-project-name.gradle if you elect to
+   CLOSED: [2013-02-26 Tue 21:36]

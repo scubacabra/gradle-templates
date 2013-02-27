@@ -14,13 +14,11 @@ import org.gradle.api.Task
  */
 class JavaTemplatesPlugin implements Plugin<Project> {
   static final String CREATE_JAVA_PROJECT_TASK_NAME = "createJavaProject"
-  static final String CREATE_JAVA_SUBPROJECT_TASK_NAME = "createJavaSubProject"
   static final String CREATE_JAVA_CLASS_TASK_NAME = "createJavaClass"
 
   void apply(Project project) {
     // configureInitJavaProject(project)
     configureCreateJavaProject(project)
-    configureCreateJavaSubProject(project)
     configureCreateJavaClass(project)
   }
 
@@ -39,13 +37,6 @@ class JavaTemplatesPlugin implements Plugin<Project> {
     createJavaProject.group = TemplatesPlugin.GROUP
     createJavaProject.description = 'Creates a new Gradle Java project in a new directory named after your project.'
     createJavaProject.conventionMapping.startingDir = { project.rootDir }
-  }
-
-  def configureCreateJavaSubProject(project) { 
-    Task createJavaSubProject =  project.tasks.add(CREATE_JAVA_SUBPROJECT_TASK_NAME, CreateJavaSubProject)
-    createJavaSubProject.group = TemplatesPlugin.GROUP
-    createJavaSubProject.description = 'Creates a new Gradle Java project in a new directory named after your project.'
-    createJavaSubProject.conventionMapping.startingDir = { project.rootDir }
   }
 
   def configureCreateJavaClass(project) { 
