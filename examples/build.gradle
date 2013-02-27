@@ -1,0 +1,12 @@
+buildscript { 
+  repositories { 
+    flatDir dirs: "../build/libs"
+  }
+  dependencies { 
+    classpath ":templates:1.5"
+  }
+}
+
+apply plugin: 'templates'
+apply plugin: 'multi-project-templates'
+
