@@ -7,6 +7,8 @@ buildscript {
   }
 }
 
+apply plugin: 'multi-project-templates'
+
 allprojects { 
   repositories { 
     mavenCentral()
@@ -14,5 +16,5 @@ allprojects {
 }
 
 subprojects { subProject ->
-  
+  apply plugin: 'templates'  
 }
