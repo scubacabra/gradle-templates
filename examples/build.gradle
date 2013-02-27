@@ -8,5 +8,3 @@ buildscript {
 }
 
 apply plugin: 'templates'
-apply plugin: 'multi-project-templates'
-

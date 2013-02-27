@@ -4,29 +4,19 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.Task
 
-import templates.tasks.CreateMultipleBuildProject
 import templates.tasks.CreateJavaSubProject
 import templates.tasks.CreateGroovySubProject
 
 
 class MultiProjectTemplatesPlugin implements Plugin<Project> {
   static final String GROUP = "Template"
-  static final String CREATE_MULTIPLE_BUILD_PROJECT_TASK = "createMultipleBuildProject"
   static final String CREATE_JAVA_SUBPROJECT_TASK_NAME = "createJavaSubProject"
   static final String CREATE_GROOVY_SUBPROJECT_TASK_NAME = "createGroovySubProject"
 
   def void apply(Project project) {
-    configureMultipleBuildProject(project)
     configureCreateJavaSubProject(project)
     configureCreateGroovySubProject(project)
 
-  }
-
-  def configureMultipleBuildProject(Project project) { 
-    Task createMultipleBuildProject = project.tasks.add(CREATE_MULTIPLE_BUILD_PROJECT_TASK, CreateMultipleBuildProject)
-    createMultipleBuildProject.group = TemplatesPlugin.GROUP
-    createMultipleBuildProject.description = 'Creates a multiple directory project root structure'
-    createMultipleBuildProject.conventionMapping.startingDir = { project.rootDir }
   }
 
   def configureCreateJavaSubProject(project) { 

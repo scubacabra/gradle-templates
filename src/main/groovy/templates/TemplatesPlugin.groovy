@@ -5,10 +5,12 @@ import org.gradle.api.Project
 import org.gradle.api.Task
 
 import templates.tasks.ExportAllTemplates
+import templates.tasks.CreateMultipleBuildProject
 
 class TemplatesPlugin implements Plugin<Project> {
   static final String GROUP = "Template"
   static final String EXPORT_ALL_TEMPLATES_TASK = "exportAllTemplates"
+  static final String CREATE_MULTIPLE_BUILD_PROJECT_TASK = "createMultipleBuildProject"
 
   TemplatesExtension extension
 
@@ -21,6 +23,7 @@ class TemplatesPlugin implements Plugin<Project> {
     project.apply(plugin: WebappTemplatesPlugin)
     
     configureTemplatesExtension(project)
+    configureMultipleBuildProject(project)
     // configureExportTemplates(project)
   }
 
@@ -33,5 +36,12 @@ class TemplatesPlugin implements Plugin<Project> {
     exportAllTemplates.description = 'Exports all the default template files into the current directory.'
     exportAllTemplates.group = TemplatesPlugin.GROUP
     exportAllTemplates.dependsOn(['exportJavaTemplates', 'exportGroovyTemplates', 'exportScalaTemplates', 'exportWebappTemplates','exportPluginTemplates'])
+  }
+
+  def configureMultipleBuildProject(Project project) { 
+    Task createMultipleBuildProject = project.tasks.add(CREATE_MULTIPLE_BUILD_PROJECT_TASK, CreateMultipleBuildProject)
+    createMultipleBuildProject.group = TemplatesPlugin.GROUP
+    createMultipleBuildProject.description = 'Creates a multiple directory project root structure'
+    createMultipleBuildProject.conventionMapping.startingDir = { project.rootDir }
   }
 }
