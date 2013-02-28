@@ -14,19 +14,6 @@ class WebappTemplatesPlugin extends JavaTemplatesPlugin implements Plugin<Projec
   static final CREATE_WEBAPP_PROJECT_TASK_NAME = "createWebappProject"
   static final INIT_WEBAPP_PROJECT_TASK_NAME = "initWebappProject"
 
-  /**
-   * Creates the basic Groovy project directory structure.
-   * @param path the root of the project. Optional,defaults to user.dir.
-   */
-  void createBase(String path = System.getProperty('user.dir'), String projectName) {
-    super.createBase(path)
-    ProjectTemplate.fromRoot(path) {
-      'src/main/webapp/WEB-INF' {
-	'web.xml' template: '/templates/webapp/web-xml.tmpl', project: [name: projectName]
-      }
-    }
-  }
-
   void apply(Project project) {
  
     // Check to make sure JavaTemplatesPlugin isn't already added.

@@ -18,6 +18,9 @@ class CreateWebappProject extends CreateJavaProject {
     template.fromDirectory(projectName) { 
       'build.gradle' template: 'webapp/build.gradle.tmpl', useJetty: useJetty, projectGroup: projectGroup
       'gradle.properties' content: "version=${projectVersion}", append: true
+      source('src/main/webapp/WEB-INF') {
+	'web.xml' template: 'webapp/web-xml.tmpl', project: [name: projectName]
+      }
     }
   }
 
