@@ -19,7 +19,7 @@ abstract class CreateTemplateProject extends DefaultTask {
   String projectName
   
   def createTemplateProject(Closure additionalUserPrompts) { 
-    projectName = ConsolePromptUtil.prompt('Project Name: ')
+    projectName = projectName ?: ConsolePromptUtil.prompt('Project Name: ')
     log.debug("make template at {}", projectName)
     if(projectName) {
       additionalUserPrompts()

@@ -89,6 +89,7 @@ class TemplateBuilder {
   }
 
   private String generateTextForFile(args) {
+    String text
     if(args instanceof Map) {
       if (args.template) {
 	text = TemplatesUtil.renderTemplate(args.template, args)
@@ -98,5 +99,7 @@ class TemplateBuilder {
     } else {
       text = TemplatesUtil.renderString(args)
     }
+    log.debug("text to return from template/string is::: {}", text)
+    return text
   }
 }
