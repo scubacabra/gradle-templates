@@ -1,6 +1,5 @@
 apply plugin: 'groovy'
 
-version = '1.5'
 group = 'gradle-templates'
 
 repositories { mavenCentral() }
