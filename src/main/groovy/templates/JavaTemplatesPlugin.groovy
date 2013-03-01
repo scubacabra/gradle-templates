@@ -46,5 +46,8 @@ class JavaTemplatesPlugin implements Plugin<Project> {
     createJavaClass.conventionMapping.projectDirectory = { project.projectDir }
     createJavaClass.conventionMapping.currentDirectory = { "." }
     createJavaClass.conventionMapping.javaSourceDir = { project.templates.javaSrcDir }
+    createJavaClass.conventionMapping.groovySourceDir = { project.templates.groovySrcDir }
+    createJavaClass.conventionMapping.javaTestDir = { project.templates.javaTestDir }
+    createJavaClass.conventionMapping.groovyTestDir = { project.templates.groovyTestDir }
   }
 }
