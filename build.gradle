@@ -60,3 +60,15 @@ artifacts {
 	archives javadocJar
 	archives groovydocJar
 }
+
+uploadArchives {
+  repositories {
+    ivy {
+      url = bintray_api_base_url + '/content/' + bintray_username + '/' + bintray_repo + '/' + bintray_package + '/' + version
+      credentials {
+	username bintray_username
+	password bintray_api_key
+      }
+    }
+  }
+}
