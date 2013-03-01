@@ -41,15 +41,15 @@ class CreateClass extends DefaultTask {
       new Exception("Source Directory {} does not exist, the java plugin must not be applied for this project or their is a different folder convention you have not set up, full path is {}", sourceDirectory, srcDir)
     }
     prompts()
+    (sourceDirectory == getJavaSourceDir()) ? createClassTemplateBuilder(sourceDirectory, "java", "java/java-class.tmpl") : createClassTemplateBuilder(sourceDirectory, "groovy", "groovy/groovy-class.tmpl")
+  }
+  
+  def createClassTemplateBuilder(String sourceDirectory, String classExtension, String templatePath) {
     def classParts = ClassNameUtil.getClassParts(className)
     def template = new TemplateBuilder(getProjectDirectory())
     template.fromDirectory(getCurrentDirectory()) { 
       source (sourceDirectory + "/" + classParts.classPackagePath) {
-	if(sourceDirectory == getJavaSourceDir()) {
-	  "${classParts.className}.java" template: 'java/java-class.tmpl', classPackage: classParts.classPackage, className: classParts.className
-	} else { 
-	  "${classParts.className}.groovy" template: 'groovy/groovy-class.tmpl', classPackage: classParts.classPackage, className: classParts.className
-	}
+	"${classParts.className}.${classExtension}" template: templatePath, classPackage: classParts.classPackage, className: classParts.className
       }
       if(makeTest) { 
 	if(testType == 0) { 
@@ -65,6 +65,7 @@ class CreateClass extends DefaultTask {
     }
   }
 
+  
   def prompts = { 
     className = ConsolePromptUtil.prompt("Full package class name i.e. (com.some.examples.MyClass)")
     if(className) { 
