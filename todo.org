@@ -1,6 +1,7 @@
 
 
-* TODO get it working with the daemon turned on
+* DONE get it working with the daemon turned on
+  CLOSED: [2013-03-03 Sun 23:25]
 
 * DONE Add multi build project creation task
   CLOSED: [2013-02-17 Sun 15:40]
