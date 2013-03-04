@@ -41,3 +41,16 @@ rootProject.children.each { project ->
 
 So that if a sub-project in the settings.gradle doesn't exist, you are alerted about it, and it also checks to make sure the convention for build file naming is done.  
 
+Support for test templates
+==========
+
+when creating a Java class or a groovy class with 
+
+     gradle create[Java|Groovy]Class
+
+you are now prompted if you would like to create a Test with the choices being:
+
+1. Spock Test
+2. JUnit Test
+
+This is also something I thought would be cool, that I have used with grails, but not Gradle.
