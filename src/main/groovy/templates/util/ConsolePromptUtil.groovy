@@ -7,10 +7,7 @@ class ConsolePromptUtil {
   static final String inputPrompt = "${lineSep}??>"
 
   static String prompt(String message, String defaultValue = null) {
-    if (defaultValue) {
-      return System.console().readLine("${inputPrompt} ${message} [${defaultValue}] ") ?: defaultValue
-    }
-    return System.console().readLine("${inputPrompt} ${message} ") ?: defaultValue
+    readLine(message, defaultValue)
   }
 
   static int promptOptions(String message, List options = []) {
@@ -33,7 +30,7 @@ class ConsolePromptUtil {
 
     try {
       def range = 0..options.size() - 1
-      int choice = Integer.parseInt(System.console().readLine(consoleMessage) ?: "${defaultValue}")
+      int choice = Integer.parseInt(readLine(consoleMessage, defaultValue))
       if (choice == 0) {
 	throw new GradleException('No option provided')
       }
@@ -50,10 +47,19 @@ class ConsolePromptUtil {
 
   static boolean promptYesOrNo(String message, boolean defaultValue = false) {
     def defaultStr = defaultValue ? 'Y' : 'n'
-    String consoleVal = System.console().readLine("${inputPrompt} ${message} (Y|n)[${defaultStr}] ")
+    String consoleVal = readLine("${message} (Y|n)", defaultValue)
     if (consoleVal) {
       return consoleVal.toLowerCase().startsWith('y')
     }
     return defaultValue
+  }
+
+  private static readLine(String message, def defaultValue = null) {
+    String _message = "$inputPrompt $message " + (defaultValue ? "[$defaultValue] " : "")
+    if (System.console()) {
+      return System.console().readLine(_message) ?: defaultValue
+    }
+    println "$_message (WAITING FOR INPUT BELOW)"
+    return System.in.newReader().readLine() ?: defaultValue
   }
 }
