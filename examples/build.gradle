@@ -3,7 +3,7 @@ buildscript {
     flatDir dirs: "../build/libs"
   }
   dependencies { 
-    classpath ":templates:1.3.1"
+    classpath ":templates:1.3.2"
   }
 }
 
